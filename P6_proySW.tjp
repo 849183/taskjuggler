@@ -6,6 +6,7 @@
  */
 
 project pSix "Web Game"  2023-03-15 +2.5m {
+  now 2024-05-13
   # Set the default time zone for the project. If not specified, UTC
   # is used.
   timezone "Europe/Paris"
@@ -68,6 +69,12 @@ resource dev3 "Peter Green" {
   email "kkk@unizar.es"
 }
 
+resource acascanzal "Alain Cascan" {
+  email "849183@unizar.es"
+  rate 145.2
+  limits {dialyMax 4h}
+}
+
 # Now we specify the work packages. The whole project is described as
 # a task that contains subtasks. These subtasks are then broken down
 # into smaller tasks and so on. The innermost tasks describe the real
@@ -88,6 +95,43 @@ task WMGame "Web & Mobile Game" {
       effort 2d
       allocate boss
       depends WMGame.deliveries.start
+  }
+
+  task cloudSupport "Soporte Despliegue en la Nube" {
+    responsible acascanzal
+    task tCloudEval "Evaluación de Plataformas en la Nube" {
+      effort 4d
+      allocate acascanzal
+    }
+    task tCloudDecision "Decisión de Plataforma en la Nube" {
+      effort 2d
+      allocate acascanzal
+      depends WMGame.cloudSupport.tCloudEval
+    }
+    task tCloudDeployment "Despliegue en la Nube" {
+      effort 3d
+      allocate acascanzal
+      depends WMGame.cloudSupport.tCloudDecision
+    }
+  }
+
+    task mobileFrontend "Desarrollo Versión Móvil Frontend" {
+      responsible acascanzal
+      depends WMGame.tback.tBEd
+      task tDesign "Diseño de la Interfaz Móvil" {
+        effort 6d
+        allocate acascanzal
+      }
+      task tImplementation "Implementación de la Interfaz Móvil" {
+        effort 10d
+        allocate acascanzal
+        depends WMGame.mobileFrontend.tDesign
+      }
+      task tTesting "Pruebas de la Versión Móvil" {
+        effort 4d
+        allocate acascanzal
+        depends WMGame.mobileFrontend.tImplementation
+      }
   }
 
   task tback "Back End" {
@@ -116,6 +160,11 @@ task WMGame "Web & Mobile Game" {
       effort 20d
       allocate dev1, dev2
       depends WMGame.tback.tlogic
+    }
+
+    journalentry 2024-05-12 "Actualización de la planificación" {
+      author boss
+      summary "Se ha ajustado la fecha del informe y se ha añadido esta entrada."
     }
   }
 
@@ -146,7 +195,8 @@ task WMGame "Web & Mobile Game" {
     }    
   }
 
-  task ttest "Accpetance tests" {
+  task ttest "Acceptance tests" {
+      start 2024-06-01
       effort 10d
       allocate boss
       allocate dev2
