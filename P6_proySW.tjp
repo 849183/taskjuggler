@@ -73,7 +73,7 @@ resource dev3 "Peter Green" {
 resource acascanzal "Alain Cascan" {
   email "849183@unizar.es"
   rate 145.2
-  limits {dialyMax 4h}
+  limits {dailymax  4h}
 }
 
 # Now we specify the work packages. The whole project is described as
