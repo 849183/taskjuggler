@@ -52,6 +52,7 @@ account rev "Payments"
 # The Profit&Loss analysis should be rev - cost accounts.
 balance cost rev
 
+
 resource boss "Liz Bullock" {
   email "iiii@unizar.es"
   actual:leaves project 2023-05-07 - 2023-05-12
