@@ -407,3 +407,18 @@ resourcereport resourceGraph "" {
   hidetask ~(isleaf() & isleaf_())
   sorttasks plan.start.up
 }
+
+# A report showing the workload for each resource in the project.
+resourcereport workloadReport "" {
+  scenarios actual
+  headline "Workload for Each Resource"
+  columns name,
+          effort { title "Total Effort" },
+          daily { title "Daily Effort" },
+          weekly { title "Weekly Effort" },
+          monthly { title "Monthly Effort" },
+          chart { ${TaskTip} }
+  hideresource @none
+  sortresources name.up
+  hidetask @all
+}
